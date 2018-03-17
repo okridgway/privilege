@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+
+<head>
+</head>
+
+<body>
+
+    This is a test
+    <pre id="demo">
+
+    </pre>
+    <button type="button" onclick='document.getElementById("demo").innerHTML = data'>Click Me!</button>
+
+    <script src='lib/d3/d3.js'></script>
+    <script>
+        var data
+        var demo = document.getElementById("demo");
+        d3.json("totalpop.json", function(data) {
+            console.log(data[0]);
+            data = JSON.stringify(data[0]);
+            demo.innerHTML = (data);
+
+
+        });
+    </script>
+</body>
+
+</html>
