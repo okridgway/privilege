@@ -2,28 +2,69 @@
 <html>
 
 <head>
+    <script type="text/javascript" src="lib/d3/d3.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
 </head>
 
 <body>
-
-    This is a test
-    <pre id="demo">
-
-    </pre>
-    <button type="button" onclick='document.getElementById("demo").innerHTML = data'>Click Me!</button>
-
-    <script src='lib/d3/d3.js'></script>
-    <script>
-        var data
-        var demo = document.getElementById("demo");
-        d3.json("totalpop.json", function(data) {
-            console.log(data[0]);
-            data = JSON.stringify(data[0]);
-            demo.innerHTML = (data);
+    <p>Test</p> Hello World!
+    <div id="I"> </div>
 
 
-        });
-    </script>
 </body>
+<script type="text/javascript">
+    var dataset;
+    d3.json("sevencont.json", function(data) {
+        var contlist = d3.keys(data[0]);
+        console.log(contlist);
+        var world = d3.sum(d3.values(data[0]));
+        console.log(world);
+        console.log(data[0]);
+        dataset = contlist;
 
+        d3.select("body").selectAll("p")
+            .data(dataset)
+            .enter()
+            .append("p")
+            .text(function(d) {
+                return d;
+            });
+        //Width and height
+        var w = 500;
+        var h = 50;
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w) 
+            .attr("height", h); 
+
+        var i;
+        for (i = 0; i < world; i++) {
+            d3.select("body")
+                .append("img")
+                .attr("width", 50)
+                .attr("height", 50)
+                .attr("src","img/man.svg")
+                .attr("class","totalpop")
+        };
+        var namerica = (data[0]['North America']);
+        console.log(namerica);
+        for (i=0; i < namerica; i++) {
+            d3.select("img")
+                .attr("class",function(d,i){
+                      return i-80;
+                      });
+        }; 
+        
+    });
+
+</script>
+<style>
+    .totalpop {
+        -webkit-filter: grayscale(100%);
+        filter: grayscale(100%);
+    }    
+    .selectpop {
+    }
+</style>
 </html>
