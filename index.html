@@ -7,61 +7,55 @@
 
 </head>
 
+
 <body>
-    <p>If the whole world were reduced to the following 100 stick men below, how many of them would be from
-        <input list="continents" placeholder="North America">
-        <datalist name="continents" id="continents"> 
-        
-        </datalist> ?
-    </p>
-    <div id="I"> </div>
+    <div id="I">
+        <p>If the whole world were reduced to the following 100 stick men below, how many of them would be from
+            <input type='text' id="continent" list="continents" placeholder="North America" onkeyup="selectedpop(this.value);" onclick="this.value=''">
+            <datalist name="continents" id="continents"> 
+            </datalist>?
+        </p>
+    </div>
 
 
 </body>
 <script type="text/javascript">
+    //create global variables
+    var testdata;
     var dataset;
+    var cont = 'North America';
+
+    //load JSON file 
     d3.json("sevencont.json", function(data) {
-        dataset = data[0];
+
+        //create local variables
         var contlist = d3.keys(data[0]);
         var poplist = d3.values(data[0]);
-        console.log(contlist);
+        testdata = data[0];
         var world = d3.sum(d3.values(data[0]));
-        console.log(world);
-        console.log(data[0]);
         dataset = [contlist, poplist];
-        console.log(dataset[1])
-        
-        //d3
-        
-     var input =   d3.select("datalist").append("datalist")
-            .attr("placeholder","North America")
-            .attr("id", "continents")
-            .attr("name", "continents");
+
+        //Create textbox input with suggested options
+        var input = d3.select("datalist");
         var options = input.selectAll("option")
             .data(dataset[0])
             .enter()
             .append("option");
         options.text(function(d) {
-            return d;
-        })
-        .attr("value", function(d){
-            return d;
-        })
-        .data(dataset[1])
-            .attr("data-value", function(d){
-            return d;
-        });
-        
-    
-        var w = 500;
-        var h = 50;
-        var svg = d3.select("body")
-            .append("svg")
-            .attr("width", w)
-            .attr("height", h);
+                return d;
+            })
+            .attr("value", function(d) {
+                return d;
+            })
+            .data(dataset[1])
+            .attr("data-value", function(d) {
+                return d;
+            });
 
+
+        //create a stick person and loop 'world' times
         var i;
-        for (i = 0; i < world; i++) {
+        for (i = 1; i < world + 1; i++) {
             d3.select("body")
                 .append("img")
                 .attr("width", 50)
@@ -69,18 +63,22 @@
                 .attr("src", "img/man.svg")
                 .attr("class", "totalpop")
         };
-        var namerica = (data[0]['North America']);
-        console.log(namerica);
-        console.log()
-        for (i = 0; i < namerica; i++) {
-            d3.select("img")
-                .attr("class", function(d, i) {
-                    return i;
-                });
-        };
-
+        selectedpop(cont);
     });
 
+    //obtain and write selected continent to console.
+    function selectedpop(cont) {
+        var continent = (testdata[cont]);
+        console.log(cont);
+        d3.selectAll("img")
+            .classed("totalpop", true);
+        //change color of selected continent's population 
+        for (i = 1; i < continent + 4; i++) {
+            d3.selectAll("img").filter("img:nth-child(" +
+                    i + ")")
+                .classed("totalpop", false);
+        }
+    };
 </script>
 <style>
     .totalpop {
@@ -88,8 +86,23 @@
         filter: grayscale(100%);
     }
 
-    .selectpop {}
+    #I {
+        font-family: sans-serif;
+        font-weight: 200;
+        font-size: 200%;
+    }
 
+    #continent {
+        font-family: inherit;
+        font-weight: inherit;
+        font-size: inherit;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    input::-webkit-option-picker-indicator {
+        opacity: 100%
+    }
 </style>
 
 </html>
