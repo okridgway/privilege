@@ -8,7 +8,12 @@
 </head>
 
 <body>
-    <p>Test</p> Hello World!
+    <p>If the whole world were reduced to the following 100 stick men below, how many of them would be from
+        <input list="continents" placeholder="North America">
+        <datalist name="continents" id="continents"> 
+        
+        </datalist> ?
+    </p>
     <div id="I"> </div>
 
 
@@ -16,27 +21,44 @@
 <script type="text/javascript">
     var dataset;
     d3.json("sevencont.json", function(data) {
+        dataset = data[0];
         var contlist = d3.keys(data[0]);
+        var poplist = d3.values(data[0]);
         console.log(contlist);
         var world = d3.sum(d3.values(data[0]));
         console.log(world);
         console.log(data[0]);
-        dataset = contlist;
-
-        d3.select("body").selectAll("p")
-            .data(dataset)
+        dataset = [contlist, poplist];
+        console.log(dataset[1])
+        
+        //d3
+        
+     var input =   d3.select("datalist").append("datalist")
+            .attr("placeholder","North America")
+            .attr("id", "continents")
+            .attr("name", "continents");
+        var options = input.selectAll("option")
+            .data(dataset[0])
             .enter()
-            .append("p")
-            .text(function(d) {
-                return d;
-            });
-        //Width and height
+            .append("option");
+        options.text(function(d) {
+            return d;
+        })
+        .attr("value", function(d){
+            return d;
+        })
+        .data(dataset[1])
+            .attr("data-value", function(d){
+            return d;
+        });
+        
+    
         var w = 500;
         var h = 50;
         var svg = d3.select("body")
             .append("svg")
-            .attr("width", w) 
-            .attr("height", h); 
+            .attr("width", w)
+            .attr("height", h);
 
         var i;
         for (i = 0; i < world; i++) {
@@ -44,18 +66,19 @@
                 .append("img")
                 .attr("width", 50)
                 .attr("height", 50)
-                .attr("src","img/man.svg")
-                .attr("class","totalpop")
+                .attr("src", "img/man.svg")
+                .attr("class", "totalpop")
         };
         var namerica = (data[0]['North America']);
         console.log(namerica);
-        for (i=0; i < namerica; i++) {
+        console.log()
+        for (i = 0; i < namerica; i++) {
             d3.select("img")
-                .attr("class",function(d,i){
-                      return i-80;
-                      });
-        }; 
-        
+                .attr("class", function(d, i) {
+                    return i;
+                });
+        };
+
     });
 
 </script>
@@ -63,8 +86,10 @@
     .totalpop {
         -webkit-filter: grayscale(100%);
         filter: grayscale(100%);
-    }    
-    .selectpop {
     }
+
+    .selectpop {}
+
 </style>
+
 </html>
