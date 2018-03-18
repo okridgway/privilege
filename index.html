@@ -10,8 +10,8 @@
 
 <body>
     <div id="I">
-        <p>If the whole world were reduced to the following 100 stick men below, how many of them would be from
-            <input type='text' id="continent" list="continents" placeholder="North America" onkeyup="selectedpop(this.value);" onclick="this.value=''">
+        <p>If the whole world were reduced to 100 people, how many of them would be from
+            <input type='text' id="continent" list="continents" placeholder="North America" onkeyup="selectedpop(this.value);" onclick="this.value=''" onchange="this.style.width = ((this.value.length) * 15) + 20+ 'px';" onkeypress="this.style.width = ((this.value.length +1) * 17) + 25+ 'px';">
             <datalist name="continents" id="continents"> 
             </datalist>?
         </p>
@@ -48,7 +48,7 @@
                 return d;
             })
             .data(dataset[1])
-            .attr("data-value", function(d) {
+            .attr("data", function(d) {
                 return d;
             });
 
@@ -81,6 +81,15 @@
     };
 </script>
 <style>
+    *,
+    *:before,
+    *:after {
+        -moz-box-sizing: inherit;
+        -webkit-box-sizing: inherit;
+        -ms-box-sizing: inherit;
+        box-sizing: inherit;
+    }
+
     .totalpop {
         -webkit-filter: grayscale(100%);
         filter: grayscale(100%);
@@ -92,16 +101,37 @@
         font-size: 200%;
     }
 
+    input::-webkit-calendar-picker-indicator {
+        display: none;
+    }
+
+    input,
+    select,
+    textarea {
+        color: #ff0000;
+    }
+
     #continent {
         font-family: inherit;
         font-weight: inherit;
         font-size: inherit;
         box-sizing: border-box;
         -moz-box-sizing: border-box;
+        border: none;
+        width: 40%;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        border-bottom: 2px dashed red;
     }
 
-    input::-webkit-option-picker-indicator {
-        opacity: 100%
+    #continent:hover {
+        border-bottom: 2px solid red;
+    }
+
+    *:focus {
+        outline-width: 0px;
+        outline-color: transparent;
     }
 </style>
 
