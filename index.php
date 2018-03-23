@@ -4,61 +4,10 @@
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width initial-scale=1'>
-    <title>Far Nothing</title>
-</head>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <link rel="stylesheet" type="text/css" href="style.css">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .topnav {
-            overflow: hidden;
-            background-color: white;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #EEEEEE;
-        }
-
-        .topnav a {
-            float: left;
-            color: #B5B5B5;
-            text-align: center;
-            padding: 0px 16px;
-            text-decoration: none;
-
-        }
-
-        .topnav a:hover {
-            color: black;
-        }
-
-        .topnav a:active {
-            color: red;
-
-    </style>
+    <title>Far Nothing | Home</title>
 </head>
 
-<body>
-
-    <div class="topnav">
-        <a href="/">Far Nothing</a>
-        <a href="/syllabus.php">Syllabus</a>
-        <a href="/proposal.php">Proposal</a>
-        <a href="visualization.php">Visualization</a>
-        <a href="notes.php">Reader's Notes</a>
-        <a href="references.php">References</a>
-    </div>
-
-
-
-</body>
-
-</html>
-
-<body>
-    <?php include("nav.html");?>
+<body>    <?php include("nav.html");?>
     <div id='write' class='is-mac'>
 
         <h1>Perceiving Privilege</h1>
@@ -73,7 +22,7 @@
             <li>Lay out basic storyline of essay and what statistics should be included.</li>
             <li>Find specified statistics needed as outlined in step 3.</li>
             <li>Design layout of visual essay and determine what visualizations will look like.</li>
-            <li>Code visual essay and bring it all together.</li>
+            <li>Code <a href="/visualization">visual essay</a> and bring it all together.</li>
 
         </ol>
     </div>

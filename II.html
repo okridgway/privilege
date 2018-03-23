@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+
+<head>
+    <script type="text/javascript" src="lib/d3/d3.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <title>Far Nothing | Insight 1.0</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+
+<body>
+
+    <div id="I">
+        <h2>Vizualization</h2>
+        <p>If the whole world were reduced to 100 people, how many of them would be from
+            <input type='text' id="country" list="countries" placeholder="United States of America" onkeyup="selectedpop(this.value);" onclick="this.value=''" onchange="this.style.width = ((this.value.length) * 15) + 20+ 'px';" onkeypress="this.style.width = ((this.value.length +1) * 17) + 25+ 'px';">
+            <datalist name="countries" id="countries"> 
+            </datalist>?
+        </p>
+    </div>
+
+
+    <script type="text/javascript">
+        //create global variables
+        var testdata;
+        var dataset;
+        var cont = 'North America';
+
+        //load JSON file 
+        d3.json("totalpop.json", function(data) {
+
+            //create local variables
+            var contlist = d3.keys(data[0]);
+            var poplist = d3.values(data[0]);
+            testdata = data[0];
+            var world = d3.sum(d3.values(data[0]));
+            dataset = [contlist, poplist];
+
+            //Create textbox input with suggested options
+            var input = d3.select("datalist");
+            var options = input.selectAll("option")
+                .data(dataset[0])
+                .enter()
+                .append("option");
+            options
+                .attr("value", function(d) {
+                    return d;
+                })
+                .data(dataset[1])
+                .attr("data", function(d) {
+                    return d;
+                })
+                .text(function(d) {
+                    return d;
+                });
+
+
+            //create a stick person and loop 'world' times
+            var i;
+            for (i = 1; i < world + 1; i++) {
+                d3.select("body")
+                    .append("img")
+                    .attr("width", 50)
+                    .attr("height", 50)
+                    .attr("src", "img/man.svg")
+                    .attr("class", "totalpop")
+            };
+            selectedpop(cont);
+        });
+
+        //obtain and write selected country to console.
+        function selectedpop(cont) {
+            var country = (testdata[cont]);
+            console.log(country);
+            console.log(cont);
+            d3.selectAll("img")
+                .classed("totalpop", true);
+            //change color of selected country's population 
+            for (i = 1; i < country + 3; i++) {
+                d3.selectAll("img").filter("img:nth-child(" +
+                        i + ")")
+                    .classed("totalpop", false);
+            }
+        };
+    </script>
+</body>
+
+</html>
